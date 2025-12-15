@@ -1,7 +1,8 @@
-package com.example.faculty.controller;
+package com.yourpackage.controller;
 
-import com.example.faculty.model.*;
-import com.example.faculty.service.FacultyService;
+import com.yourpackage.model.Faculty;
+import com.yourpackage.service.FacultyService;
+import jakarta.servlet.http.HttpSession; // Use javax.servlet.http if on older Spring
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,88 +11,76 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/faculty")
 public class FacultyController {
-    
-    // Demonstrating Field-based Dependency Injection with @Autowired
+
     @Autowired
     private FacultyService facultyService;
+
+    // ===========================
+    // 1. REGISTRATION
+    // ===========================
     
-    public FacultyController() {
-        System.out.println("FacultyController bean created - Service will be autowired!");
+    // Show the Registration Form (GET)
+    @GetMapping("/register")
+    public String showRegisterPage() {
+        return "register"; // Loads /WEB-INF/jsp/register.jsp
     }
-    
-    @GetMapping("/")
-    public String home(Model model) {
-        model.addAttribute("totalFaculty", facultyService.getTotalFacultyCount());
-        model.addAttribute("totalSalary", facultyService.getTotalSalaryExpenditure());
-        return "index";
+
+    // Process the Registration (POST)
+    @PostMapping("/register")
+    public String registerFaculty(@ModelAttribute Faculty faculty) {
+        facultyService.registerFaculty(faculty);
+        return "redirect:/faculty/login"; // Redirect to login after successful register
     }
-    
-    @GetMapping("/add")
-    public String showAddForm() {
-        return "add-faculty";
+
+    // ===========================
+    // 2. LOGIN
+    // ===========================
+
+    // Show the Login Form (GET)
+    @GetMapping("/login")
+    public String showLoginPage() {
+        return "login"; // Loads /WEB-INF/jsp/login.jsp
     }
-    
-    @PostMapping("/add")
-    public String addFaculty(@RequestParam String type,
-                            @RequestParam String id,
-                            @RequestParam String name,
-                            @RequestParam String department,
-                            @RequestParam String email,
-                            @RequestParam String qualification,
-                            @RequestParam(required = false) String basicSalary,
-                            @RequestParam(required = false) String yearsOfExperience,
-                            @RequestParam(required = false) String designation,
-                            @RequestParam(required = false) String hoursPerWeek,
-                            @RequestParam(required = false) String hourlyRate,
-                            @RequestParam(required = false) String specialization,
-                            @RequestParam(required = false) String numberOfClasses,
-                            @RequestParam(required = false) String payPerClass,
-                            @RequestParam(required = false) String contractDuration,
-                            Model model) {
-        try {
-            Faculty faculty = null;
-            
-            switch (type) {
-                case "regular":
-                    faculty = new RegularFaculty(id, name, department, email, qualification,
-                        Double.parseDouble(basicSalary), Integer.parseInt(yearsOfExperience), designation);
-                    break;
-                case "visiting":
-                    faculty = new VisitingFaculty(id, name, department, email, qualification,
-                        Integer.parseInt(hoursPerWeek), Double.parseDouble(hourlyRate), specialization);
-                    break;
-                case "adhoc":
-                    faculty = new AdhocFaculty(id, name, department, email, qualification,
-                        Integer.parseInt(numberOfClasses), Double.parseDouble(payPerClass), contractDuration);
-                    break;
-            }
-            
-            facultyService.addFaculty(faculty);
-            model.addAttribute("message", "Faculty added successfully!");
-            model.addAttribute("messageType", "success");
-        } catch (Exception e) {
-            model.addAttribute("message", "Error: " + e.getMessage());
-            model.addAttribute("messageType", "error");
-        }
+
+    // Process the Login (POST)
+    // NOTE: We use @RequestParam for Form Data, NOT @RequestBody
+    @PostMapping("/login")
+    public String loginFaculty(@RequestParam String email, 
+                               @RequestParam String password, 
+                               Model model, 
+                               HttpSession session) {
         
-        return "add-faculty";
-    }
-    
-    @GetMapping("/view")
-    public String viewAllFaculty(Model model) {
-        model.addAttribute("facultyList", facultyService.getAllFaculty());
-        return "view-faculty";
-    }
-    
-    @GetMapping("/delete/{id}")
-    public String deleteFaculty(@PathVariable String id, Model model) {
-        try {
-            facultyService.deleteFaculty(id);
-            model.addAttribute("message", "Faculty deleted successfully!");
-        } catch (Exception e) {
-            model.addAttribute("message", "Error: " + e.getMessage());
+        Faculty faculty = facultyService.loginFaculty(email, password);
+
+        if (faculty != null) {
+            // Login Success: Save user in Session and go to Dashboard
+            session.setAttribute("loggedInUser", faculty);
+            return "redirect:/faculty/dashboard";
+        } else {
+            // Login Failed: Reload login page with an error message
+            model.addAttribute("error", "Invalid Email or Password");
+            return "login";
         }
+    }
+
+    // ===========================
+    // 3. DASHBOARD & LIST
+    // ===========================
+
+    @GetMapping("/dashboard")
+    public String showDashboard(Model model, HttpSession session) {
+        // Security Check: Is user logged in?
+        if (session.getAttribute("loggedInUser") == null) {
+            return "redirect:/faculty/login";
+        }
+        return "dashboard"; // Loads /WEB-INF/jsp/dashboard.jsp
+    }
+
+    // Show All Faculty (Admin View)
+    @GetMapping("/all")
+    public String getAllFaculty(Model model) {
+        // Add the list of faculty to the model so the JSP can read it
         model.addAttribute("facultyList", facultyService.getAllFaculty());
-        return "view-faculty";
+        return "faculty-list"; // Loads /WEB-INF/jsp/faculty-list.jsp
     }
 }
