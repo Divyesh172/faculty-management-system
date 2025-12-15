@@ -2,9 +2,17 @@ package com.example.faculty;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class FacultyManagementApplication {
+public class FacultyManagementApplication extends SpringBootServletInitializer {
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(FacultyManagementApplication.class);
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(FacultyManagementApplication.class, args);
     }
