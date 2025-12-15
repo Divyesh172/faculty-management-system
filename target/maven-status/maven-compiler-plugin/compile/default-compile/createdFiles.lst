@@ -1,0 +1,9 @@
+com/example/faculty/model/AdhocFaculty.class
+com/example/faculty/model/Faculty.class
+com/example/faculty/FacultyManagementApplication.class
+com/example/faculty/service/FacultyServiceImpl.class
+com/example/faculty/service/FacultyService.class
+com/example/faculty/repository/FacultyRepository.class
+com/example/faculty/controller/FacultyController.class
+com/example/faculty/model/VisitingFaculty.class
+com/example/faculty/model/RegularFaculty.class

@@ -1,0 +1,9 @@
+/home/divyesh-trivedi/eclipse-workspace/faculty-management/src/main/java/com/example/faculty/model/Faculty.java
+/home/divyesh-trivedi/eclipse-workspace/faculty-management/src/main/java/com/example/faculty/model/RegularFaculty.java
+/home/divyesh-trivedi/eclipse-workspace/faculty-management/src/main/java/com/example/faculty/model/AdhocFaculty.java
+/home/divyesh-trivedi/eclipse-workspace/faculty-management/src/main/java/com/example/faculty/service/FacultyService.java
+/home/divyesh-trivedi/eclipse-workspace/faculty-management/src/main/java/com/example/faculty/FacultyManagementApplication.java
+/home/divyesh-trivedi/eclipse-workspace/faculty-management/src/main/java/com/example/faculty/model/VisitingFaculty.java
+/home/divyesh-trivedi/eclipse-workspace/faculty-management/src/main/java/com/example/faculty/repository/FacultyRepository.java
+/home/divyesh-trivedi/eclipse-workspace/faculty-management/src/main/java/com/example/faculty/service/FacultyServiceImpl.java
+/home/divyesh-trivedi/eclipse-workspace/faculty-management/src/main/java/com/example/faculty/controller/FacultyController.java
