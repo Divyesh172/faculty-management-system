@@ -15,7 +15,8 @@
         button { width: 100%; padding: 12px; background: #764ba2; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; }
         button:hover { background: #5e3c85; }
         .error { color: #dc3545; text-align: center; margin-bottom: 15px; font-size: 0.9em; }
-        a { display: block; text-align: center; margin-top: 15px; color: white; text-decoration: none; }
+        a { display: block; text-align: center; margin-top: 15px; color: #4c51bf; text-decoration: none; }
+        a:hover { color: #2a2f75; text-decoration: underline; }
     </style>
 </head>
 <body>
