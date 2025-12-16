@@ -1,6 +1,8 @@
 package com.example.faculty.model;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Lob;
 
 @Entity
 @Table(name = "faculty")
@@ -25,6 +27,19 @@ public class Faculty {
 
     @Column(name = "mobile_number")
     private String mobileNumber;
+    
+    @Lob // Tells database this is a Large Object
+    @Column(columnDefinition = "MEDIUMTEXT") // Allows storing strings up to 16MB
+    private String profilePicture;
+
+    // Getter and Setter
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
 
     public Faculty() {}
 

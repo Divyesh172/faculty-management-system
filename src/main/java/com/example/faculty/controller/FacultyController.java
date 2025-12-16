@@ -9,6 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
+import java.util.Base64;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/faculty")
@@ -78,13 +81,39 @@ public class FacultyController {
     }
 
     @PostMapping("/update")
-    public String updateProfile(@ModelAttribute Faculty faculty, HttpSession session, RedirectAttributes redirectAttributes) {
-        facultyService.updateFaculty(faculty);
+    public String updateProfile(@ModelAttribute Faculty faculty, 
+                                @RequestParam("file") MultipartFile file, 
+                                HttpSession session, 
+                                RedirectAttributes redirectAttributes) {
         
-        session.setAttribute("loggedInUser", facultyService.getFacultyById(faculty.getId()));
-        
-        redirectAttributes.addFlashAttribute("message", "Profile Updated Successfully!");
-        redirectAttributes.addFlashAttribute("messageType", "success");
+        try {
+            // 1. Get the existing user data from DB (to keep old image if no new one is uploaded)
+            Faculty existingUser = facultyService.getFacultyById(faculty.getId());
+            
+            // 2. If user uploaded a file, convert it to Base64
+            if (!file.isEmpty()) {
+                String base64Image = Base64.getEncoder().encodeToString(file.getBytes());
+                // Add the data prefix so HTML knows it's an image
+                faculty.setProfilePicture("data:image/jpeg;base64," + base64Image);
+            } else {
+                // Keep the old picture if they didn't upload a new one
+                faculty.setProfilePicture(existingUser.getProfilePicture());
+            }
+
+            // 3. Save updates
+            facultyService.updateFaculty(faculty);
+            
+            // 4. Update session
+            session.setAttribute("loggedInUser", facultyService.getFacultyById(faculty.getId()));
+            
+            redirectAttributes.addFlashAttribute("message", "Profile Updated Successfully!");
+            redirectAttributes.addFlashAttribute("messageType", "success");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("message", "Error uploading image");
+            redirectAttributes.addFlashAttribute("messageType", "error");
+        }
         
         return "redirect:/faculty/dashboard";
     }

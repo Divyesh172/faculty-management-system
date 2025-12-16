@@ -19,7 +19,7 @@
 
 <div class="card">
     <h2>Edit Profile</h2>
-    <form action="/faculty/update" method="POST">
+    <form action="/faculty/update" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="id" value="${faculty.id}">
         
         <label>Email (Cannot change)</label>
@@ -33,11 +33,13 @@
 
         <label>Mobile Number</label>
         <input type="text" name="mobileNumber" value="${faculty.mobileNumber}" required>
+		
+		<label>Profile Picture</label>
+		<input type="file" name="file" accept="image/*" style="background: white;">
 
         <button type="submit">Save Changes</button>
     </form>
     <a href="/faculty/dashboard" class="back-link">Cancel</a>
 </div>
-
 </body>
 </html>

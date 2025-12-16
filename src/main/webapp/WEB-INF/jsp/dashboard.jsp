@@ -27,5 +27,18 @@
         <a href="/faculty/edit-profile" style="padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; margin-left: 10px;">Edit My Profile</a>
         <a href="/faculty/login" class="btn btn-secondary">Logout</a>
     </div>
+    <div style="text-align: center; margin-bottom: 20px;">
+    <c:if test="${not empty sessionScope.loggedInUser.profilePicture}">
+        <img src="${sessionScope.loggedInUser.profilePicture}" 
+             alt="Profile" 
+             style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 3px solid #667eea;">
+    </c:if>
+    
+    <c:if test="${empty sessionScope.loggedInUser.profilePicture}">
+        <div style="width: 150px; height: 150px; background: #ddd; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 50px; color: #666;">
+            ${sessionScope.loggedInUser.fullName.charAt(0)}
+        </div>
+    </c:if>
+	</div>
 </body>
 </html>

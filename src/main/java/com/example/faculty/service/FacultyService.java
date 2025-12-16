@@ -25,12 +25,22 @@ public class FacultyService {
     }
     
     public void updateFaculty(Faculty updatedFaculty) {
+        // 1. Find the existing record
         Faculty existingUser = facultyRepository.findById(updatedFaculty.getId()).orElse(null);
         
         if (existingUser != null) {
+            // 2. Update the fields
             existingUser.setFullName(updatedFaculty.getFullName());
             existingUser.setDepartment(updatedFaculty.getDepartment());
             existingUser.setMobileNumber(updatedFaculty.getMobileNumber());
+            
+            // --- THIS WAS MISSING ---
+            // Only update the picture if a new one was provided (not null)
+            if (updatedFaculty.getProfilePicture() != null) {
+                existingUser.setProfilePicture(updatedFaculty.getProfilePicture());
+            }
+            
+            // 3. Save back to database
             facultyRepository.save(existingUser);
         }
     }
