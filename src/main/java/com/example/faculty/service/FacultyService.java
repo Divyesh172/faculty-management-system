@@ -23,8 +23,21 @@ public class FacultyService {
     public List<Faculty> getAllFaculty() {
         return facultyRepository.findAll();
     }
+    
+    public void updateFaculty(Faculty updatedFaculty) {
+        Faculty existingUser = facultyRepository.findById(updatedFaculty.getId()).orElse(null);
+        
+        if (existingUser != null) {
+            existingUser.setFullName(updatedFaculty.getFullName());
+            existingUser.setDepartment(updatedFaculty.getDepartment());
+            existingUser.setMobileNumber(updatedFaculty.getMobileNumber());
+            facultyRepository.save(existingUser);
+        }
+    }
+    public Faculty getFacultyById(Long id) {
+        return facultyRepository.findById(id).orElse(null);
+    }
 
-    // The Search Method
     public List<Faculty> searchFaculty(String keyword) {
         if (keyword != null && !keyword.isEmpty()) {
             return facultyRepository.findByFullNameContainingIgnoreCase(keyword);

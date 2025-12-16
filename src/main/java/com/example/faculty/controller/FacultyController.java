@@ -65,4 +65,27 @@ public class FacultyController {
         model.addAttribute("keyword", keyword);
         return "faculty-list";
     }
+    
+    @GetMapping("/edit-profile")
+    public String showEditProfilePage(HttpSession session, Model model) {
+        Faculty user = (Faculty) session.getAttribute("loggedInUser");
+        if (user == null) {
+            return "redirect:/faculty/login";
+        }
+        Faculty freshData = facultyService.getFacultyById(user.getId());
+        model.addAttribute("faculty", freshData);
+        return "edit-profile";
+    }
+
+    @PostMapping("/update")
+    public String updateProfile(@ModelAttribute Faculty faculty, HttpSession session, RedirectAttributes redirectAttributes) {
+        facultyService.updateFaculty(faculty);
+        
+        session.setAttribute("loggedInUser", facultyService.getFacultyById(faculty.getId()));
+        
+        redirectAttributes.addFlashAttribute("message", "Profile Updated Successfully!");
+        redirectAttributes.addFlashAttribute("messageType", "success");
+        
+        return "redirect:/faculty/dashboard";
+    }
 }

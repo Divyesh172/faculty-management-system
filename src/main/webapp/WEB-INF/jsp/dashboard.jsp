@@ -24,6 +24,7 @@
         </div>
         <br>
         <a href="/faculty/all" class="btn">View All Faculty</a>
+        <a href="/faculty/edit-profile" style="padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; margin-left: 10px;">Edit My Profile</a>
         <a href="/faculty/login" class="btn btn-secondary">Logout</a>
     </div>
 </body>
