@@ -1,8 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+	<meta charset="UTF-8">
+    <meta name="description" content="Faculty Management System Login Portal for VESIT">
     <title>Faculty Login</title>
     <style>
         body { font-family: sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
@@ -16,6 +18,7 @@
     </style>
 </head>
 <body>
+	<main>
     <div class="container">
         <h2>🔐 Login</h2>
         
@@ -24,11 +27,12 @@
         </c:if>
 
         <form action="/faculty/login" method="POST">
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
+            <input type="email" name="email" placeholder="Email" aria-label="Email" required>
+            <input type="password" name="password" placeholder="Password" aria-label="Password" required>
             <button type="submit">Login</button>
         </form>
         <a href="/faculty/register">New Faculty? Register Here</a>
     </div>
+    </main>
 </body>
 </html>

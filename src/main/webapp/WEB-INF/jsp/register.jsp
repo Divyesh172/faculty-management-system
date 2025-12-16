@@ -1,7 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+	<meta charset="UTF-8">
+    <meta name="description" content="Faculty Management System Login Portal for VESIT">
     <title>Register Faculty</title>
     <style>
         body { font-family: sans-serif; background: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; }
@@ -14,17 +16,19 @@
     </style>
 </head>
 <body>
+	<main>
     <div class="container">
         <h2>📝 Faculty Registration</h2>
         <form action="/faculty/register" method="POST">
-            <input type="text" name="fullName" placeholder="Full Name" required>
-            <input type="email" name="email" placeholder="Email Address" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <input type="text" name="department" placeholder="Department" required>
-            <input type="text" name="mobileNumber" placeholder="Mobile Number" required>
+            <input type="text" name="fullName" placeholder="Full Name" aria-label="Full Name" required>
+			<input type="email" name="email" placeholder="Email Address" aria-label="Email Address" required>
+			<input type="password" name="password" placeholder="Password" aria-label="Password" required>
+			<input type="text" name="department" placeholder="Department" aria-label="Department" required>
+			<input type="text" name="mobileNumber" placeholder="Mobile Number" aria-label="Mobile Number" required>
             <button type="submit">Register</button>
         </form>
         <a href="/faculty/login">Already have an account? Login here</a>
     </div>
+    </main>
 </body>
 </html>
