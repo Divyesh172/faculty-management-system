@@ -1,18 +1,34 @@
 package com.example.faculty.service;
 
 import com.example.faculty.model.Faculty;
+import com.example.faculty.repository.FacultyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import java.util.List;
 
-public interface FacultyService {
-    Faculty registerFaculty(Faculty faculty);
-    Faculty loginFaculty(String email, String password);
-    List<Faculty> getAllFaculty();
-    Faculty getFacultyById(Long id);
-}
+@Service
+public class FacultyService {
 
-public List<Faculty> searchFaculty(String keyword) {
-    if (keyword != null && !keyword.isEmpty()) {
-        return facultyRepository.findByFullNameContainingIgnoreCase(keyword);
+    @Autowired
+    private FacultyRepository facultyRepository;
+
+    public void registerFaculty(Faculty faculty) {
+        facultyRepository.save(faculty);
     }
-    return facultyRepository.findAll();
+
+    public Faculty loginFaculty(String email, String password) {
+        return facultyRepository.findByEmailAndPassword(email, password);
+    }
+
+    public List<Faculty> getAllFaculty() {
+        return facultyRepository.findAll();
+    }
+
+    // The Search Method
+    public List<Faculty> searchFaculty(String keyword) {
+        if (keyword != null && !keyword.isEmpty()) {
+            return facultyRepository.findByFullNameContainingIgnoreCase(keyword);
+        }
+        return facultyRepository.findAll();
+    }
 }

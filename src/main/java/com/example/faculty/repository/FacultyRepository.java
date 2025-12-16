@@ -1,14 +1,14 @@
 package com.example.faculty.repository;
 
 import com.example.faculty.model.Faculty;
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import java.util.Optional;
+import java.util.List;
 
-@Repository
 public interface FacultyRepository extends JpaRepository<Faculty, Long> {
-    Optional<Faculty> findByEmail(String email);
-    boolean existsByEmail(String email);
+    
+    // Used for Login
+    Faculty findByEmailAndPassword(String email, String password);
+
+    // Used for Search (The new part)
     List<Faculty> findByFullNameContainingIgnoreCase(String keyword);
 }
