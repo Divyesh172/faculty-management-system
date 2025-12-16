@@ -12,7 +12,7 @@
         input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
         button { width: 100%; padding: 10px; background: #667eea; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
         button:hover { background: #5a6fd6; }
-        a { display: block; text-align: center; margin-top: 15px; color: #667eea; text-decoration: none; }
+        a { display: block; text-align: center; margin-top: 15px; color: white; text-decoration: none; }
     </style>
 </head>
 <body>

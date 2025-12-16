@@ -17,7 +17,17 @@
 <body>
     <a href="/faculty/dashboard" class="back-btn">← Back to Dashboard</a>
     <h1>📋 Faculty Directory</h1>
-    
+    <div style="margin-bottom: 20px; text-align: right;">
+    <form action="/faculty/all" method="get">
+        <input type="text" name="keyword" placeholder="Search by name..." value="${keyword}" 
+               style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; width: 250px;">
+        <button type="submit" 
+                style="padding: 8px 15px; background-color: #667eea; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            Search
+        </button>
+        <a href="/faculty/all" style="margin-left: 10px; text-decoration: none; color: #666;">Clear</a>
+    </form>
+	</div>
     <table>
         <thead>
             <tr>

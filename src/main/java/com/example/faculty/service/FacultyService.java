@@ -9,3 +9,10 @@ public interface FacultyService {
     List<Faculty> getAllFaculty();
     Faculty getFacultyById(Long id);
 }
+
+public List<Faculty> searchFaculty(String keyword) {
+    if (keyword != null && !keyword.isEmpty()) {
+        return facultyRepository.findByFullNameContainingIgnoreCase(keyword);
+    }
+    return facultyRepository.findAll();
+}

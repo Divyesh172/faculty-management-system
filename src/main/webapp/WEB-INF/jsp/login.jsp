@@ -5,6 +5,7 @@
 <head>
 	<meta charset="UTF-8">
     <meta name="description" content="Faculty Management System Login Portal for VESIT">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <title>Faculty Login</title>
     <style>
         body { font-family: sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
@@ -14,7 +15,7 @@
         button { width: 100%; padding: 12px; background: #764ba2; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; }
         button:hover { background: #5e3c85; }
         .error { color: #dc3545; text-align: center; margin-bottom: 15px; font-size: 0.9em; }
-        a { display: block; text-align: center; margin-top: 15px; color: #667eea; text-decoration: none; }
+        a { display: block; text-align: center; margin-top: 15px; color: white; text-decoration: none; }
     </style>
 </head>
 <body>
@@ -34,5 +35,26 @@
         <a href="/faculty/register">New Faculty? Register Here</a>
     </div>
     </main>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+	<script>
+    // Get the message from Spring Boot (JSP renders this as a string)
+    	var msg = "${message}";
+    	var type = "${messageType}";
+
+    	if (msg && msg.trim() !== "") {
+        	Toastify({
+            	text: msg,
+            	duration: 3000,
+            	close: true,
+            	gravity: "bottom", // `top` or `bottom`
+            	position: "right", // `left`, `center` or `right`
+            	// Change color based on success or error
+            	style: {
+               		background: type === 'error' ? "linear-gradient(to right, #ff5f6d, #ffc371)" : "linear-gradient(to right, #00b09b, #96c93d)",
+            	}
+        	}).showToast();
+    	}
+	</script>
 </body>
 </html>
