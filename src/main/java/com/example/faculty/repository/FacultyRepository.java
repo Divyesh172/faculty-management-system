@@ -6,9 +6,6 @@ import java.util.List;
 
 public interface FacultyRepository extends JpaRepository<Faculty, Long> {
     
-    // Used for Login
-    Faculty findByEmailAndPassword(String email, String password);
-
-    // Used for Search (The new part)
+    Faculty findByEmail(String email);
     List<Faculty> findByFullNameContainingIgnoreCase(String keyword);
 }

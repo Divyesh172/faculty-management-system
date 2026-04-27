@@ -2,22 +2,22 @@
 FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /app
 
-# Copy the source code and pom.xml to the container
-COPY . .
+# Copy the pom.xml and source code
+COPY pom.xml .
+COPY src ./src
 
-# Build the application inside the container (skipping tests to save time)
+# Build the JAR (skipping tests to speed up CI/CD)
 RUN mvn clean package -DskipTests
 
 # --------- Stage 2: Run the Application ---------
-FROM eclipse-temurin:17-jdk-jammy
+FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
 
-# Copy the WAR file generated in the previous stage
-# Note: We grab it from the 'build' stage
-COPY --from=build /app/target/faculty-management-1.0.0.war app.war
+# Copy the JAR file from the build stage
+COPY --from=build /app/target/faculty-management-1.0.0.jar app.jar
 
-# Expose the port (Render will override this via Env Variable, which is fine)
+# Render will override this port, but 8080 is the local default
 EXPOSE 8080
 
-# Run the application
-ENTRYPOINT ["java", "-jar", "app.war"]
+# Run the stateless container
+ENTRYPOINT ["java", "-jar", "app.jar"]

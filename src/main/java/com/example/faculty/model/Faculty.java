@@ -1,8 +1,10 @@
 package com.example.faculty.model;
 
 import jakarta.persistence.*;
-import jakarta.persistence.Column;
-import jakarta.persistence.Lob;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "faculty")
@@ -13,12 +15,17 @@ public class Faculty {
     @Column(name = "id")
     private Long id;
 
+	@NotBlank(message = "Full name is required")
     @Column(name = "full_name", nullable = false)
     private String fullName;
 
+	@Email(message="Invalid Email format")
+	@NotBlank(message = "Email is required")
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@NotBlank(message = "Password is required")
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -28,17 +35,15 @@ public class Faculty {
     @Column(name = "mobile_number")
     private String mobileNumber;
     
-    @Lob // Tells database this is a Large Object
-    @Column(columnDefinition = "MEDIUMTEXT") // Allows storing strings up to 16MB
-    private String profilePicture;
+    @Column(name = "profile_img_url")
+    private String profileImageUrl;
 
-    // Getter and Setter
-    public String getProfilePicture() {
-        return profilePicture;
+    public String getProfileImageUrl() {
+        return profileImageUrl;
     }
 
-    public void setProfilePicture(String profilePicture) {
-        this.profilePicture = profilePicture;
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
 
     public Faculty() {}
